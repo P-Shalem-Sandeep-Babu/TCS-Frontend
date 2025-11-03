@@ -1,0 +1,41 @@
+.footer {
+  background: #1c1c1c;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.location {
+  text-align: left;
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+.social-icons {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.social-icons svg {
+  margin: 0 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons svg:hover {
+  transform: scale(1.2);
+  color: #00bcd4;
+}
+
+.footer p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ccc;
+}

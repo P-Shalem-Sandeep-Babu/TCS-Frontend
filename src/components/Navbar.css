@@ -1,0 +1,159 @@
+.navbar {
+  background: #1c1c1c;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  position: relative;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #f8f9fa;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+}
+
+.auth-buttons {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-buttons li {
+  margin: 0 10px;
+}
+
+.auth-buttons a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.auth-buttons a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.profile-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-icon {
+  font-size: 2rem;
+}
+
+.dropdown-icon {
+  font-size: 0.8rem;
+  margin-left: 5px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 200px;
+  z-index: 1000;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.profile-large-icon {
+  font-size: 2.5rem;
+  color: #555;
+  margin-right: 10px;
+}
+
+.profile-menu {
+  padding: 5px 0;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #333;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #f8f9fa;
+}
+
+/* Close dropdown when clicking outside */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px;
+  }
+  
+  .nav-links {
+    margin: 15px 0;
+  }
+  
+  .auth-section {
+    margin-top: 10px;
+  }
+}
