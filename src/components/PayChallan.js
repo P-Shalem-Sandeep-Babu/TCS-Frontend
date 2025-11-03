@@ -1,21 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
-import {
-  FaSearch,
-  FaMoneyBillWave,
-  FaCheckCircle,
-  FaTimesCircle,
-} from "react-icons/fa";
+import { FaSearch, FaMoneyBillWave, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 const PayChallan = () => {
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [challan, setChallan] = useState(null);
+  const [paymentMessage, setPaymentMessage] = useState(null);
 
   const handleSearch = async () => {
+    setPaymentMessage(null);
     try {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/challans/search/${vehicleNumber}`
-      );
+      // --- UPDATED: Using Environment Variable ---
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/challans/search/${vehicleNumber}`);
       setChallan(data);
     } catch (error) {
       alert("Challan Not Found!");
@@ -25,11 +21,12 @@ const PayChallan = () => {
 
   const handlePayment = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/challans/pay/${challan._id}`);
-      alert("Payment Successful!");
-      setChallan({ ...challan, isPaid: true });
+      // --- UPDATED: Using Environment Variable ---
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/challans/pay/${challan._id}`);
+      setPaymentMessage({ type: "success", text: "Payment Successful!" });
+      setChallan({ ...challan, status: "Paid" });
     } catch (error) {
-      alert("Payment Failed!");
+      setPaymentMessage({ type: "danger", text: "Payment Failed!" });
     }
   };
 
@@ -38,7 +35,6 @@ const PayChallan = () => {
       <div className="card shadow p-4">
         <h2 className="text-center">Pay Challan</h2>
 
-        {/* Search Input */}
         <div className="input-group mb-3">
           <input
             type="text"
@@ -52,34 +48,24 @@ const PayChallan = () => {
           </button>
         </div>
 
-        {/* Display Challan Details */}
+        {paymentMessage && <div className={`alert alert-${paymentMessage.type}`}>{paymentMessage.text}</div>}
+
         {challan && (
           <div className="mt-3">
             <h4>Challan Details</h4>
+            <p><strong>Vehicle Number:</strong> {challan.vehicleNumber}</p>
+            <p><strong>Owner Name:</strong> {challan.ownerName}</p>
+            <p><strong>Fine Amount:</strong> ₹{challan.fineAmount}</p>
             <p>
-              <strong>Vehicle Number:</strong> {challan.vehicleNumber}
-            </p>
-            <p>
-              <strong>Owner Name:</strong> {challan.ownerName}
-            </p>
-            <p>
-              <strong>Fine Amount:</strong> ₹{challan.fineAmount}
-            </p>
-            <p>
-              <strong>Status:</strong>{" "}
-              {challan.isPaid ? (
-                <span className="text-success">
-                  <FaCheckCircle /> Paid
-                </span>
+              <strong>Status:</strong>
+              {challan.status === "Paid" ? (
+                <span className="text-success"> <FaCheckCircle /> Paid</span>
               ) : (
-                <span className="text-danger">
-                  <FaTimesCircle /> Pending
-                </span>
+                <span className="text-danger"> <FaTimesCircle /> Unpaid</span>
               )}
             </p>
 
-            {/* Show Pay Button if Not Paid */}
-            {!challan.isPaid && (
+            {challan.status !== "Paid" && (
               <button onClick={handlePayment} className="btn btn-success mt-2">
                 <FaMoneyBillWave /> Pay Now
               </button>
