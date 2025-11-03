@@ -12,9 +12,8 @@ const SearchChallan = () => {
     setError(null);
 
     try {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/challans/search/${vehicleNumber}`
-      );
+      // --- UPDATED: Using Environment Variable ---
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/challans/search/${vehicleNumber}`);
       setChallan(data);
     } catch (error) {
       setError("No Challan Found for this Vehicle Number!");
@@ -24,9 +23,8 @@ const SearchChallan = () => {
   return (
     <div className="container mt-5">
       <div className="card shadow p-4">
-        <h2 className="text-center mb-4">Search Challan</h2>
+        <h2 className="text-center">Search Challan</h2>
 
-        {/* Search Input */}
         <div className="input-group mb-3">
           <input
             type="text"
@@ -36,36 +34,24 @@ const SearchChallan = () => {
             className="form-control"
           />
           <button onClick={handleSearch} className="btn btn-info">
-            <FaSearch className="me-1" /> Search
+            <FaSearch /> Search
           </button>
         </div>
 
-        {/* Display Error Message */}
         {error && <div className="alert alert-danger">{error}</div>}
 
-        {/* Display Challan Details */}
         {challan && (
           <div className="mt-3">
             <h4>Challan Details</h4>
+            <p><strong>Vehicle Number:</strong> {challan.vehicleNumber}</p>
+            <p><strong>Owner Name:</strong> {challan.ownerName}</p>
+            <p><strong>Fine Amount:</strong> ₹{challan.fineAmount}</p>
             <p>
-              <strong>Vehicle Number:</strong> {challan.vehicleNumber}
-            </p>
-            <p>
-              <strong>Owner Name:</strong> {challan.ownerName}
-            </p>
-            <p>
-              <strong>Fine Amount:</strong> ₹{challan.fineAmount}
-            </p>
-            <p>
-              <strong>Status:</strong>{" "}
-              {challan.isPaid ? (
-                <span className="text-success">
-                  <FaCheckCircle /> Paid
-                </span>
+              <strong>Status:</strong>
+              {challan.status === "Paid" ? (
+                <span className="text-success"> <FaCheckCircle /> Paid</span>
               ) : (
-                <span className="text-danger">
-                  <FaTimesCircle /> Pending
-                </span>
+                <span className="text-danger"> <FaTimesCircle /> Unpaid</span>
               )}
             </p>
           </div>
