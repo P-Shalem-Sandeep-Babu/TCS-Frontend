@@ -21,11 +21,10 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/login", formData);
+      // --- UPDATED: Using Environment Variable ---
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, formData);
       
-      // Use the login function from AuthContext
       login(data.token, data.role);
-      
       alert("Login Successful!");
       navigate("/dashboard");
     } catch (error) {
@@ -41,7 +40,6 @@ const Login = () => {
       <div className="card shadow p-4" style={{ width: "400px" }}>
         <h2 className="text-center mb-3">User Login</h2>
 
-        {/* Image */}
         <div className="text-center">
           <img
             src="https://cdn.vectorstock.com/i/preview-1x/63/48/biker-riding-motorcycle-isolated-flat-vector-46026348.jpg"
@@ -51,7 +49,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Error Message */}
         {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
 
         <form onSubmit={handleLogin} className="mt-3">
